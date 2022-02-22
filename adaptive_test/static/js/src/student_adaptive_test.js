@@ -1,11 +1,10 @@
-
 /* Javascript for StudentAdaptiveTestXBlock. */
 function StudentAdaptiveTestXBlock(runtime, element) {
     // See load and submit funcions at python script
     var handlerUrlLoad = runtime.handlerUrl(element, 'load_test');
     var handlerUrlSubmit = runtime.handlerUrl(element, 'submit_test');
     //*********** DATABASE HANDLER BIN*********
-    var handlerUrlUpdate = runtime.handlerUrl(element, 'update');    
+    var handlerUrlUpdate = runtime.handlerUrl(element, 'update');
 
     // On document load
     $(function ($) {
@@ -18,130 +17,130 @@ function StudentAdaptiveTestXBlock(runtime, element) {
             success: function (data) {
                 window.test = data.test;
 
-                if (data.test_result) {  
-                    
+                if (data.test_result) {
+
                     $("#test").empty();
                     // Avoid fake submitments
                     $("#submit-test").attr("disabled", true);
                     // Displays result
-                    $("#test").append('<p> Tu test ha revelado que eres: <br>' + data.test_result.result+'</p>') 
-                    
-                   // --------------------------------------------------------
-                   //if (data.test == 6){
-                   	arraydatos = data.test_result.result.split(" ");
-                   	console.log(arraydatos);    
-                   	p_visual = arraydatos[3].substring(0, arraydatos[3].length -1);
-                   	p_auditivo = arraydatos[5].substring(0, arraydatos[5].length -1);
-                   	p_kines = arraydatos[7].substring(0, arraydatos[7].length -1);
-                   	              	               
-		        var Chartgrafico = {
-		        type: "doughnut",
-		        data: {
-		            datasets: [{
-		            data: [p_visual,p_auditivo,p_kines],
-		            backgroundColor: [
-		                '#0e2f57', '#0870bc', '#08bcff',
-		            ],
-		            }],
-		            labels: [
-		            " Visual" , " Auditivo", " Kinestésico",
-		            ]
-		        },
-		        options: {
-		            responsive: true,    
-		        }
-		        }
+                    $("#test").append('<p> Tu test ha revelado que eres: <br>' + data.test_result.result + '</p>')
 
-		        var grafica = document.getElementById('chart');
-		        window.pie = new Chart(grafica, Chartgrafico);
-		       // }
-                   //---------------------------------------------------------
-                   
-                   if(data.test==5){
- 
-                    var valores = [0,0,0,0,0,0,0,0]
+                    // --------------------------------------------------------
+                    //if (data.test == 6){
+                    arraydatos = data.test_result.result.split(" ");
+                    console.log(arraydatos);
+                    p_visual = arraydatos[3].substring(0, arraydatos[3].length - 1);
+                    p_auditivo = arraydatos[5].substring(0, arraydatos[5].length - 1);
+                    p_kines = arraydatos[7].substring(0, arraydatos[7].length - 1);
 
-                    resultados = data.test_result.result
-                    resultados = resultados.replaceAll("Mucho mas","3 1")
-                    resultados = resultados.replaceAll("Es mas","2 1")
-                    resultados = resultados.replaceAll("Equilibrio entre","2 2")
-                    resultados = resultados.replaceAll(" que "," ")
-                    resultados = resultados.replaceAll(" y "," ")
-                    resultados = resultados.split("<br>")
-
-                    resultados.forEach(element => {
-                        
-                        variable = element.split(" ")
-
-                        if(variable[2] == "Verbal"){
-                            valores[0]=variable[0]
-                            valores[4]=variable[1]
-                        }else if(variable[3] == "Verbal"){
-                            valores[0]=variable[1]
-                            valores[4]=variable[0]
+                    var Chartgrafico = {
+                        type: "doughnut",
+                        data: {
+                            datasets: [{
+                                data: [p_visual, p_auditivo, p_kines],
+                                backgroundColor: [
+                                    '#0e2f57', '#0870bc', '#08bcff',
+                                ],
+                            }],
+                            labels: [
+                                " Visual", " Auditivo", " Kinestésico",
+                            ]
+                        },
+                        options: {
+                            responsive: true,
                         }
-                        if(variable[2] == "Sensorial"){
-                            valores[7]=variable[0]
-                            valores[3]=variable[1]
-                        }else if(variable[3] == "Sensorial"){
-                            valores[7]=variable[1]
-                            valores[3]=variable[0]
-                        }
-                        if(variable[2] == "Activo"){
-                            valores[2]=variable[0]
-                            valores[6]=variable[1]
-                        }else if(variable[3] == "Activo"){
-                            valores[2]=variable[1]
-                            valores[6]=variable[0]
-                        }
-                        if(variable[2] == "Global"){
-                            valores[5]=variable[0]
-                            valores[1]=variable[1]
-                        }else if(variable[3] == "Global"){
-                            valores[5]=variable[1]
-                            valores[1]=variable[0]
-                        }
-                    });
+                    }
 
-                    var valores_int = valores.map(function(x){
-                        return parseInt(x,10);
-                    });
+                    var grafica = document.getElementById('chart');
+                    window.pie = new Chart(grafica, Chartgrafico);
+                    // }
+                    //---------------------------------------------------------
 
-                    var options = {
-                        responsive: false,
-                        maintainAspectRatio: true,
-                        scale: {
-                            max: 3,
-                            min: 0,
-                            ticks: {
-                                stepSize: 1
+                    if (data.test == 5) {
+
+                        var valores = [0, 0, 0, 0, 0, 0, 0, 0]
+
+                        resultados = data.test_result.result
+                        resultados = resultados.replaceAll("Mucho mas", "3 1")
+                        resultados = resultados.replaceAll("Es mas", "2 1")
+                        resultados = resultados.replaceAll("Equilibrio entre", "2 2")
+                        resultados = resultados.replaceAll(" que ", " ")
+                        resultados = resultados.replaceAll(" y ", " ")
+                        resultados = resultados.split("<br>")
+
+                        resultados.forEach(element => {
+
+                            variable = element.split(" ")
+
+                            if (variable[2] == "Verbal") {
+                                valores[0] = variable[0]
+                                valores[4] = variable[1]
+                            } else if (variable[3] == "Verbal") {
+                                valores[0] = variable[1]
+                                valores[4] = variable[0]
                             }
-                        }
-                    };
+                            if (variable[2] == "Sensorial") {
+                                valores[7] = variable[0]
+                                valores[3] = variable[1]
+                            } else if (variable[3] == "Sensorial") {
+                                valores[7] = variable[1]
+                                valores[3] = variable[0]
+                            }
+                            if (variable[2] == "Activo") {
+                                valores[2] = variable[0]
+                                valores[6] = variable[1]
+                            } else if (variable[3] == "Activo") {
+                                valores[2] = variable[1]
+                                valores[6] = variable[0]
+                            }
+                            if (variable[2] == "Global") {
+                                valores[5] = variable[0]
+                                valores[1] = variable[1]
+                            } else if (variable[3] == "Global") {
+                                valores[5] = variable[1]
+                                valores[1] = variable[0]
+                            }
+                        });
 
-                    var dataLiteracy = {
-                        labels: ['Verbal', 'Secuencial', 'Activo', 'Intuitivo', 'Visual', 'Global', 'Reflexivo', 'Sensorial'],
-                        datasets: [{
-                            label: "Resultados",
-                            backgroundColor: "rgba(100,123,255,0.5)",
-                            borderColor: "rgba(100,123,255,1)",
-                            pointBackgroundColor: "rgba(179,181,198,1)",
-                            pointBorderColor: "#0064ff",
-                            pointHoverBackgroundColor: "#fff",
-                            pointHoverBorderColor: "rgba(179,181,198,1)",
-                            data: valores_int
-                        }]
-                    };
+                        var valores_int = valores.map(function (x) {
+                            return parseInt(x, 10);
+                        });
 
-                    var ctx = document.getElementById("chart");
-                    var myRadarChart = new Chart(ctx, {
-                        type: 'radar',
-                        data: dataLiteracy,
-                        options: options
-                    });
+                        var options = {
+                            responsive: false,
+                            maintainAspectRatio: true,
+                            scale: {
+                                max: 3,
+                                min: 0,
+                                ticks: {
+                                    stepSize: 1
+                                }
+                            }
+                        };
 
-                    console.log(myRadarChart);
-                   }
+                        var dataLiteracy = {
+                            labels: ['Verbal', 'Secuencial', 'Activo', 'Intuitivo', 'Visual', 'Global', 'Reflexivo', 'Sensorial'],
+                            datasets: [{
+                                label: "Resultados",
+                                backgroundColor: "rgba(100,123,255,0.5)",
+                                borderColor: "rgba(100,123,255,1)",
+                                pointBackgroundColor: "rgba(179,181,198,1)",
+                                pointBorderColor: "#0064ff",
+                                pointHoverBackgroundColor: "#fff",
+                                pointHoverBorderColor: "rgba(179,181,198,1)",
+                                data: valores_int
+                            }]
+                        };
+
+                        var ctx = document.getElementById("chart");
+                        var myRadarChart = new Chart(ctx, {
+                            type: 'radar',
+                            data: dataLiteracy,
+                            options: options
+                        });
+
+                        console.log(myRadarChart);
+                    }
 
                 } else {
                     if (data.test == 0) loadAlreadyPresented();
@@ -167,7 +166,7 @@ function StudentAdaptiveTestXBlock(runtime, element) {
                 result = getTestKolbResults();
                 test_name = "Kolb"
             }
-            if (test == 2) { 
+            if (test == 2) {
                 result = getTestHerrmannResults();
                 test_name = "Hermann"
             }
@@ -187,7 +186,7 @@ function StudentAdaptiveTestXBlock(runtime, element) {
                 result = getBandlerGrinder();
                 test_name = "Bandler & Grinder"
             }
-            
+
             $.ajax({
                 type: "POST",
                 url: handlerUrlSubmit,
@@ -202,40 +201,40 @@ function StudentAdaptiveTestXBlock(runtime, element) {
                     // Displays result
                     $("#test").append('<p> Tu test ha revelado que eres: <br>' + result.result + '</br></p>')
                     // send test results to the python file, so they can be uploaded to database
-                    
+
                     //---------------------------------------------
                     arraydatos = result.result.split(" ");
-                   	console.log(arraydatos);    
-                   	p_visual = arraydatos[3].substring(0, arraydatos[3].length -1);
-                   	p_auditivo = arraydatos[5].substring(0, arraydatos[5].length -1);
-                   	p_kines = arraydatos[7].substring(0, arraydatos[7].length -1);
-                   	                         
-		        var Chartgrafico = {
-		        type: "doughnut",
-		        data: {
-		            datasets: [{
-		            data: [p_visual,p_auditivo,p_kines],
-		            backgroundColor: [
-		                '#0e2f57', '#0870bc', '#08bcff',
-		            ],
-		            }],
-		            labels: [
-		            " Visual" , " Auditivo", " Kinestésico",
-		            ]
-		        },
-		        options: {
-		            responsive: true,
-		        }
-		        }
+                    console.log(arraydatos);
+                    p_visual = arraydatos[3].substring(0, arraydatos[3].length - 1);
+                    p_auditivo = arraydatos[5].substring(0, arraydatos[5].length - 1);
+                    p_kines = arraydatos[7].substring(0, arraydatos[7].length - 1);
 
-		        var grafica = document.getElementById('chart');
-		        window.pie = new Chart(grafica, Chartgrafico);
+                    var Chartgrafico = {
+                        type: "doughnut",
+                        data: {
+                            datasets: [{
+                                data: [p_visual, p_auditivo, p_kines],
+                                backgroundColor: [
+                                    '#0e2f57', '#0870bc', '#08bcff',
+                                ],
+                            }],
+                            labels: [
+                                " Visual", " Auditivo", " Kinestésico",
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                        }
+                    }
+
+                    var grafica = document.getElementById('chart');
+                    window.pie = new Chart(grafica, Chartgrafico);
                     //----------------------------------------------
-                    
+
                     $.ajax({
                         type: "POST",
                         url: handlerUrlUpdate,
-                        data: JSON.stringify({"test_name": test_name, "result": result.result })
+                        data: JSON.stringify({ "test_name": test_name, "result": result.result })
                     });
                 }
             });
@@ -262,18 +261,18 @@ function StudentAdaptiveTestXBlock(runtime, element) {
 
     function loadHoneyAlonso() {
         html = honeyAlonso;
-       $("#test").html(html);
+        $("#test").html(html);
     }
 
     function loadFelderSilverman() {
-         html = felderSilverman;
-         $("#test").html(html);
+        html = felderSilverman;
+        $("#test").html(html);
     }
 
-    function loadBandlerGrinder() {   
-        html=bandlerGrinder;
+    function loadBandlerGrinder() {
+        html = bandlerGrinder;
         $("#test").html(html);
-   }
+    }
 
     function loadAlreadyPresented() {
         html = '<p>El test no está disponible.</p>';
@@ -310,7 +309,7 @@ function StudentAdaptiveTestXBlock(runtime, element) {
         const highestSection = sectionsScore.indexOf(Math.max(...sectionsScore));
         var strQuadrant = '';
 
-        switch(highestSection){
+        switch (highestSection) {
             case 0: {
                 strQuadrant = 'Lógico' // A
                 break;
@@ -334,10 +333,10 @@ function StudentAdaptiveTestXBlock(runtime, element) {
 
         return { result: strQuadrant, result_details: sectionsScore };
     }
-    
-    
-	function getTestInteligencias() {
-        const sections = ["A", "B", "C", "D","E", "F", "G"];
+
+
+    function getTestInteligencias() {
+        const sections = ["A", "B", "C", "D", "E", "F", "G"];
         var results = [];
         var sectionsScore = [];
 
@@ -353,7 +352,7 @@ function StudentAdaptiveTestXBlock(runtime, element) {
         const highestSection = sectionsScore.indexOf(Math.max(...sectionsScore));
         var strQuadrant = '';
 
-        switch(highestSection){
+        switch (highestSection) {
             case 0: {
                 strQuadrant = 'Inteligencia Verbal' // A
                 break;
@@ -382,7 +381,7 @@ function StudentAdaptiveTestXBlock(runtime, element) {
                 strQuadrant = 'Inteligencia Interpersonal' // H
                 break;
             }
-	
+
         }
 
         //TODO: Improve. If scoring per section is equal and there is more than one prominent classifications, all must be returned
@@ -412,7 +411,7 @@ function StudentAdaptiveTestXBlock(runtime, element) {
         const highestSection = sectionsScore.indexOf(Math.max(...sectionsScore));
         var strQuadrant = '';
 
-        switch(highestSection){
+        switch (highestSection) {
             case 0: {
                 strQuadrant = 'Activo' // A
                 break;
@@ -434,223 +433,232 @@ function StudentAdaptiveTestXBlock(runtime, element) {
         //TODO: Improve. If scoring per section is equal and there is more than one prominent classifications, all must be returned
         // This reminds, how to classify multifaceted people
 
-        return { result: strQuadrant, result_details: sectionsScore };   
+        return { result: strQuadrant, result_details: sectionsScore };
     }
 
     function getBandlerGrinder() {
-        try{
+        try {
             responseTestBG = {}
-            const visual = ['b','a','b','c','c','b','a','b','a','c','b','b','c','a','b','a','c','c','a','a','b','c','a','b','a','c','b','c','b','c','b','c','a','b','b','a','a','b','b','c'];
-            const auditivo = ['a','c','a','b','b','a','b','a','c','b','a','c','a','b','a','c','b','a','b','c','c','a','b','a','b','b','a','b','c','b','a','a','c','a','c','c','b','c','c','a'];
-            const cines = ['c','b','c','a','a','c','c','c','b','a','c','a','b','c','c','b','a','b','c','b','a','b','c','c','c','a','c','a','a','a','c','b','b','c','a','b','c','a','a','b'];
+            const visual = ['b', 'a', 'b', 'c', 'c', 'b', 'a', 'b', 'a', 'c', 'b', 'b', 'c', 'a', 'b', 'a', 'c', 'c', 'a', 'a', 'b', 'c', 'a', 'b', 'a', 'c', 'b', 'c', 'b', 'c', 'b', 'c', 'a', 'b', 'b', 'a', 'a', 'b', 'b', 'c'];
+            const auditivo = ['a', 'c', 'a', 'b', 'b', 'a', 'b', 'a', 'c', 'b', 'a', 'c', 'a', 'b', 'a', 'c', 'b', 'a', 'b', 'c', 'c', 'a', 'b', 'a', 'b', 'b', 'a', 'b', 'c', 'b', 'a', 'a', 'c', 'a', 'c', 'c', 'b', 'c', 'c', 'a'];
+            const cines = ['c', 'b', 'c', 'a', 'a', 'c', 'c', 'c', 'b', 'a', 'c', 'a', 'b', 'c', 'c', 'b', 'a', 'b', 'c', 'b', 'a', 'b', 'c', 'c', 'c', 'a', 'c', 'a', 'a', 'a', 'c', 'b', 'b', 'c', 'a', 'b', 'c', 'a', 'a', 'b'];
             let strQuadrant = '';
-            
+
             const visualResult = [];
-            const auditivoResult = []; 
+            const auditivoResult = [];
             const cinesResult = [];
             console.log(visualResult.length)
             for (let i = 1; i < 41; i++) {
-                let value = document.querySelector('input[name="N'+ i + '"]:checked').value || 'hola';
-                if(value == visual[i-1]){
+                let value = document.querySelector('input[name="N' + i + '"]:checked').value || 'hola';
+                if (value == visual[i - 1]) {
                     visualResult.push(1);
-                } 
-                if(value == auditivo[i-1]){
+                }
+                if (value == auditivo[i - 1]) {
                     auditivoResult.push(1);
-                } 
-                if(value == cines[i-1]){
+                }
+                if (value == cines[i - 1]) {
                     cinesResult.push(1);
-                } 
+                }
             }
-            if(visualResult.length >= auditivoResult.length && visualResult.length >= cinesResult.length){
-                strQuadrant = 'Dominante Visual <br>';
-            } 
-            if(auditivoResult.length >= visualResult.length && auditivoResult.length >= cinesResult.length){
-                strQuadrant = 'Dominante Auditivo <br>';
-            } 
-            if(cinesResult.length >= visualResult.length && cinesResult.length > auditivoResult.length){
+            if (visualResult.length >= auditivoResult.length && visualResult.length >= cinesResult.length) {
+                if (visualResult.length == auditivoResult.length) {
+                    strQuadrant = 'Dominante Visual-Auditivo <br>';
+                } else if (visualResult.length == cinesResult.length) {
+                    strQuadrant = 'Dominante Visual-Kinestésico <br>';
+                } else {
+                    strQuadrant = 'Dominante Visual <br>';
+                }
+            } else if (auditivoResult.length >= visualResult.length && auditivoResult.length >= cinesResult.length) {
+                if (auditivoResult.length == cinesResult.length) {
+                    strQuadrant = 'Dominante Auditivo-Kinestésico <br>';
+                } else {
+                    strQuadrant = 'Dominante Auditivo <br>';
+                }
+            } else if (cinesResult.length >= visualResult.length && cinesResult.length > auditivoResult.length) {
                 strQuadrant = 'Dominante Kinestésico <br>';
-            } 
+            }
+
             //strQuadrant = {'result':`auditivo: ${auditivoResult.length*100/40}%`};
-            strQuadrant = strQuadrant + `Visual: ${visualResult.length*100/40}% <br>`
-            strQuadrant = strQuadrant + `Auditivo: ${auditivoResult.length*100/40}% <br>`
-            strQuadrant = strQuadrant + `Kinestésico: ${cinesResult.length*100/40}% <br>`
-            responseTestBG = {'result':strQuadrant};
+            strQuadrant = strQuadrant + `Visual: ${visualResult.length * 100 / 40}% <br>`
+            strQuadrant = strQuadrant + `Auditivo: ${auditivoResult.length * 100 / 40}% <br>`
+            strQuadrant = strQuadrant + `Kinestésico: ${cinesResult.length * 100 / 40}% <br>`
+            responseTestBG = { 'result': strQuadrant };
             return responseTestBG;
         }
-        catch(e){
+        catch (e) {
             console.log(e);
             Swal.fire({
                 icon: 'error',
                 title: 'Lo sentimos',
                 text: 'Nos has llenado el test en su totalidad!'
-              })
+            })
         }
     }
-    
+
     function getFelderSilverman() {
-        try{
-        const sections = ["A", "B", "C", "D"];
-        const componentes = ['Activo','Reflexivo','Sensorial','Intuitivo','Visual','Verbal','Secuencial','Global'];
-        var strQuadrant = '';
-        var sectionsScore = [];
+        try {
+            const sections = ["A", "B", "C", "D"];
+            const componentes = ['Activo', 'Reflexivo', 'Sensorial', 'Intuitivo', 'Visual', 'Verbal', 'Secuencial', 'Global'];
+            var strQuadrant = '';
+            var sectionsScore = [];
 
             sections.map((section) => {
                 var scorePerSectionA = 0;
                 var scorePerSectionB = 0;
                 for (var i = 1; i < 12; i++) {
-    
-                    
+
+
                     var value = document.querySelector('input[name="' + section + i + '"]:checked').value;
-                             
-                    
-                   
-                    if(value == "a"){
+
+
+
+                    if (value == "a") {
                         scorePerSectionA += 1; // values are between 0 and 1, see template HTML                   
                     }
-                    
-                        
-    
-                    
-                    else{
+
+
+
+
+                    else {
                         scorePerSectionB += 1;
-                    }  
-                                 
+                    }
+
                 }
                 sectionsScore.push(scorePerSectionA);
                 sectionsScore.push(scorePerSectionB);
             })
-        
-        // At this point, we have an array of 0s or 1s, according to chosen answer
-        //alert(JSON.stringify(results))
 
-        // Now we get the most relevant quadrant
+            // At this point, we have an array of 0s or 1s, according to chosen answer
+            //alert(JSON.stringify(results))
 
-        for(var i = 0; i < sectionsScore.length;i=i+2){
+            // Now we get the most relevant quadrant
 
-          var diferencia = Math.abs(sectionsScore[i]-sectionsScore[i+1])
-          if( sectionsScore[i] > sectionsScore[i+1]){
-            
-            var index_componente1 = i;
-            var index_componente2 = i+1;
+            for (var i = 0; i < sectionsScore.length; i = i + 2) {
 
-          }else{
+                var diferencia = Math.abs(sectionsScore[i] - sectionsScore[i + 1])
+                if (sectionsScore[i] > sectionsScore[i + 1]) {
 
-            var index_componente1 = i+1;
-            var index_componente2 = i;
+                    var index_componente1 = i;
+                    var index_componente2 = i + 1;
 
-          }                   
-          switch (diferencia){
-              case 1:
-              case 3:
-                  var resultado= 'Equilibrio entre ' + componentes[index_componente1] + ' y ' + componentes[index_componente2];
-                  break;
-              case 5:
-              case 7:
-                  var resultado= 'Es mas ' + componentes[index_componente1] + ' que ' + componentes[index_componente2];
-                  break;
-              case 9: 
-              case 11:
-                  var resultado= 'Mucho mas ' + componentes[index_componente1] + ' que ' + componentes[index_componente2];
-                  break;
-            }
+                } else {
 
-             strQuadrant = strQuadrant + resultado + '<br>';
-        }
+                    var index_componente1 = i + 1;
+                    var index_componente2 = i;
 
-
-        //TODO: Improve. If scoring per section is equal and there is more than one prominent classifications, all must be returned
-        // This reminds, how to classify multifaceted people
-
-        var valores = [0,0,0,0,0,0,0,0]
-
-        resultados = strQuadrant
-        resultados = resultados.replaceAll("Mucho mas","3 1")
-        resultados = resultados.replaceAll("Es mas","2 1")
-        resultados = resultados.replaceAll("Equilibrio entre","2 2")
-        resultados = resultados.replaceAll(" que "," ")
-        resultados = resultados.replaceAll(" y "," ")
-        resultados = resultados.split("<br>")
-
-        resultados.forEach(element => {
-            
-            variable = element.split(" ")
-
-            if(variable[2] == "Verbal"){
-                valores[0]=variable[0]
-                valores[4]=variable[1]
-            }else if(variable[3] == "Verbal"){
-                valores[0]=variable[1]
-                valores[4]=variable[0]
-            }
-            if(variable[2] == "Sensorial"){
-                valores[7]=variable[0]
-                valores[3]=variable[1]
-            }else if(variable[3] == "Sensorial"){
-                valores[7]=variable[1]
-                valores[3]=variable[0]
-            }
-            if(variable[2] == "Activo"){
-                valores[2]=variable[0]
-                valores[6]=variable[1]
-            }else if(variable[3] == "Activo"){
-                valores[2]=variable[1]
-                valores[6]=variable[0]
-            }
-            if(variable[2] == "Global"){
-                valores[5]=variable[0]
-                valores[1]=variable[1]
-            }else if(variable[3] == "Global"){
-                valores[5]=variable[1]
-                valores[1]=variable[0]
-            }
-        });
-
-        var valores_int = valores.map(function(x){
-            return parseInt(x,10);
-        });
-
-        
-                       
-        var options = {
-            responsive: false,
-            maintainAspectRatio: true,
-            scale: {
-                max: 3,
-                min: 0,
-                ticks: {
-                    stepSize: 1
                 }
+                switch (diferencia) {
+                    case 1:
+                    case 3:
+                        var resultado = 'Equilibrio entre ' + componentes[index_componente1] + ' y ' + componentes[index_componente2];
+                        break;
+                    case 5:
+                    case 7:
+                        var resultado = 'Es mas ' + componentes[index_componente1] + ' que ' + componentes[index_componente2];
+                        break;
+                    case 9:
+                    case 11:
+                        var resultado = 'Mucho mas ' + componentes[index_componente1] + ' que ' + componentes[index_componente2];
+                        break;
+                }
+
+                strQuadrant = strQuadrant + resultado + '<br>';
             }
-        };
 
-        var dataLiteracy = {
-            labels: ['Verbal', 'Secuencial', 'Activo', 'Intuitivo', 'Visual', 'Global', 'Reflexivo', 'Sensorial'],
-            datasets: [{
-                label: "Resultados",
-                backgroundColor: "rgba(100,123,255,0.5)",
-                borderColor: "rgba(100,123,255,1)",
-                pointBackgroundColor: "rgba(179,181,198,1)",
-                pointBorderColor: "#0064ff",
-                pointHoverBackgroundColor: "#fff",
-                pointHoverBorderColor: "rgba(179,181,198,1)",
-                data: valores_int
-            }]
-        };
 
-        var ctx = document.getElementById("chart");
-        var myRadarChart = new Chart(ctx, {
-            type: 'radar',
-            data: dataLiteracy,
-            options: options
-        });
+            //TODO: Improve. If scoring per section is equal and there is more than one prominent classifications, all must be returned
+            // This reminds, how to classify multifaceted people
 
-        console.log(myRadarChart);
+            var valores = [0, 0, 0, 0, 0, 0, 0, 0]
 
-        return { result: strQuadrant, result_details: sectionsScore }; 
-        
+            resultados = strQuadrant
+            resultados = resultados.replaceAll("Mucho mas", "3 1")
+            resultados = resultados.replaceAll("Es mas", "2 1")
+            resultados = resultados.replaceAll("Equilibrio entre", "2 2")
+            resultados = resultados.replaceAll(" que ", " ")
+            resultados = resultados.replaceAll(" y ", " ")
+            resultados = resultados.split("<br>")
+
+            resultados.forEach(element => {
+
+                variable = element.split(" ")
+
+                if (variable[2] == "Verbal") {
+                    valores[0] = variable[0]
+                    valores[4] = variable[1]
+                } else if (variable[3] == "Verbal") {
+                    valores[0] = variable[1]
+                    valores[4] = variable[0]
+                }
+                if (variable[2] == "Sensorial") {
+                    valores[7] = variable[0]
+                    valores[3] = variable[1]
+                } else if (variable[3] == "Sensorial") {
+                    valores[7] = variable[1]
+                    valores[3] = variable[0]
+                }
+                if (variable[2] == "Activo") {
+                    valores[2] = variable[0]
+                    valores[6] = variable[1]
+                } else if (variable[3] == "Activo") {
+                    valores[2] = variable[1]
+                    valores[6] = variable[0]
+                }
+                if (variable[2] == "Global") {
+                    valores[5] = variable[0]
+                    valores[1] = variable[1]
+                } else if (variable[3] == "Global") {
+                    valores[5] = variable[1]
+                    valores[1] = variable[0]
+                }
+            });
+
+            var valores_int = valores.map(function (x) {
+                return parseInt(x, 10);
+            });
+
+
+
+            var options = {
+                responsive: false,
+                maintainAspectRatio: true,
+                scale: {
+                    max: 3,
+                    min: 0,
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
+            };
+
+            var dataLiteracy = {
+                labels: ['Verbal', 'Secuencial', 'Activo', 'Intuitivo', 'Visual', 'Global', 'Reflexivo', 'Sensorial'],
+                datasets: [{
+                    label: "Resultados",
+                    backgroundColor: "rgba(100,123,255,0.5)",
+                    borderColor: "rgba(100,123,255,1)",
+                    pointBackgroundColor: "rgba(179,181,198,1)",
+                    pointBorderColor: "#0064ff",
+                    pointHoverBackgroundColor: "#fff",
+                    pointHoverBorderColor: "rgba(179,181,198,1)",
+                    data: valores_int
+                }]
+            };
+
+            var ctx = document.getElementById("chart");
+            var myRadarChart = new Chart(ctx, {
+                type: 'radar',
+                data: dataLiteracy,
+                options: options
+            });
+
+            console.log(myRadarChart);
+
+            return { result: strQuadrant, result_details: sectionsScore };
+
         }
 
-        catch(e){
+        catch (e) {
             console.log(e);
             window.alert("NO has llenado la totalidad del Test!");
         }
@@ -736,6 +744,6 @@ function StudentAdaptiveTestXBlock(runtime, element) {
     }
 }
 
-document.getElementById("btnVistaEstudiante").addEventListener("click",function(){
-    window.location.href="/scenario/adaptive_test.0/vista_reglas_estudiante/"+window.location.search;
+document.getElementById("btnVistaEstudiante").addEventListener("click", function () {
+    window.location.href = "/scenario/adaptive_test.0/vista_reglas_estudiante/" + window.location.search;
 });
