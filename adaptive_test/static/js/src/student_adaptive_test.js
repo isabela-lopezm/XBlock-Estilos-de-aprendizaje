@@ -33,8 +33,8 @@ function StudentAdaptiveTestXBlock(runtime, element) {
                     p_auditivo = arraydatos[5].substring(0, arraydatos[5].length - 1);
                     p_kines = arraydatos[7].substring(0, arraydatos[7].length - 1);
 
-                    var Chartgrafico = {
-                        type: "doughnut",
+                var Chartgrafico = {
+                        type: "bar",
                         data: {
                             datasets: [{
                                 data: [p_visual, p_auditivo, p_kines],
@@ -46,13 +46,20 @@ function StudentAdaptiveTestXBlock(runtime, element) {
                                 " Visual", " Auditivo", " Kinestésico",
                             ]
                         },
-                        options: {
-                            responsive: true,
-                        }
+			 options: {
+			    responsive: true,
+			    plugins: {
+				legend: {
+				    display: false
+				}
+			    }
+			}
                     }
 
-                    var grafica = document.getElementById('chart');
-                    window.pie = new Chart(grafica, Chartgrafico);
+                    var grafica = document.getElementById('chart');
+                    window.pie = new Chart(grafica, Chartgrafico);
+
+
                     // }
                     //---------------------------------------------------------
 
@@ -209,8 +216,8 @@ function StudentAdaptiveTestXBlock(runtime, element) {
                     p_auditivo = arraydatos[5].substring(0, arraydatos[5].length - 1);
                     p_kines = arraydatos[7].substring(0, arraydatos[7].length - 1);
 
-                    var Chartgrafico = {
-                        type: "doughnut",
+                   var Chartgrafico = {
+                        type: "bar",
                         data: {
                             datasets: [{
                                 data: [p_visual, p_auditivo, p_kines],
@@ -222,9 +229,14 @@ function StudentAdaptiveTestXBlock(runtime, element) {
                                 " Visual", " Auditivo", " Kinestésico",
                             ]
                         },
-                        options: {
-                            responsive: true,
-                        }
+			 options: {
+			    responsive: true, 
+			    plugins: {
+				legend: {
+				    display: false
+				}
+			    }
+			}
                     }
 
                     var grafica = document.getElementById('chart');
